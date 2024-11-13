@@ -13,11 +13,45 @@ class ListExample extends StatelessWidget {
     return AppScaffold(
       title: 'List Example',
       slivers: [
+        _StickyHeaderInput(),
         _StickyHeaderList(index: 0),
         _StickyHeaderList(index: 1),
         _StickyHeaderList(index: 2),
         _StickyHeaderList(index: 3),
       ],
+    );
+  }
+}
+
+class _StickyHeaderInput extends StatelessWidget {
+  const _StickyHeaderInput({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverStickyHeader(
+      header: Container(
+        padding: EdgeInsets.all(8),
+        color: Colors.blue,
+        child: TextField(
+          decoration: InputDecoration(filled: true),
+        ),
+      ),
+      sliver: SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (context, i) => ListTile(
+            onTap: () {
+              print('tile $i');
+            },
+            leading: CircleAvatar(
+              child: Text('0'),
+            ),
+            title: Text('List tile #$i'),
+          ),
+          childCount: 6,
+        ),
+      ),
     );
   }
 }
